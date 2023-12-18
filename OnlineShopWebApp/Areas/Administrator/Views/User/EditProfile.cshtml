@@ -1,0 +1,38 @@
+﻿@using OnlineShopWebApp.Areas.Administrator.Models;
+@model EditProfile
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+    @if (Model == null)
+    {
+        <h3 class="mb-5">Такого пользователя нет</h3>
+    }
+    else
+    {
+        <form method="post" asp-area="Administrator" asp-controller="User" asp-action="EditProfile" asp-route-Email="@Model.Email">
+            <h3 class="mb-5">Изменение данных для пользователя @Model.Email</h3>
+
+            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-outline mb-4">
+                <input asp-for="Phone" type="tel" class="form-control" placeholder="Новый номер телефона" value="@Model.Phone">
+                <span asp-validation-for="Phone"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <input asp-for="Age" type="number" class="form-control" placeholder="Возраст" value="@Model.Age">
+                <span asp-validation-for="Age"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <input asp-for="Name" type="text" class="form-control" placeholder="Имя" value="@Model.Name">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <input asp-for="Surname" type="text" class="form-control" placeholder="Фамилия" value="@Model.Surname">
+                <span asp-validation-for="Surname"></span>
+            </div>
+
+            <input type="submit" value="Изменить данные" class="btn btn-primary" />
+        </form>
+    }
+</div>

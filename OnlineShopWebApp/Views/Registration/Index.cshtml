@@ -1,0 +1,51 @@
+﻿@model RegistrationForm
+
+<section class="vh-90">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <form method="post" asp-controller="Registration" asp-action="RegistrationCheck">
+                            <h3 class="mb-5">Регистрация</h3>
+
+                            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Электронная почта">
+                                <span asp-validation-for="Email"></span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="Phone" type="text" class="form-control" placeholder="Номер телефона">
+                                <span asp-validation-for="Phone"></span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="Age" type="number" class="form-control" placeholder="Возраст">
+                                <span asp-validation-for="Age"></span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="Password" class="form-control" type="password" minlength="6" maxlength="40" placeholder="Пароль" title="Пароль от 6 до 40 символов">
+                                <span asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="ConfirmPassword" class="form-control" type="password" minlength="6" maxlength="40" placeholder="Повторите пароль" title="Пароль от 6 до 40 символов">
+                                <span asp-validation-for="ConfirmPassword"></span>
+                            </div>
+
+                            <input type="submit" value="Регистрация" class="btn btn-primary" />
+                            <a asp-controller="Authorization" asp-action="Index" asp-route-returnUrl="@Model.ReturnUrl">Уже есть аккаунт?</a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

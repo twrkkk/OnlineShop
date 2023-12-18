@@ -1,0 +1,42 @@
+﻿@model AuthorizationForm
+
+<section class="vh-90">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <form method="post" asp-controller="Authorization" asp-action="AuthorizationCheck">
+                            <h3 class="mb-5">Авторизация</h3>
+
+                            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Электронная почта">
+                                <span asp-validation-for="Email"></span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input asp-for="Password" class="form-control" type="password" minlength="6" maxlength="40" placeholder="Пароль" title="Пароль от 6 до 40 символов">
+                                <span asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="form-check d-flex justify-content-start mb-4">
+                                <input asp-for="RememberMe" id="rememberMe" class="form-check-input" type="checkbox">
+                                <span asp-validation-for="RememberMe"></span>
+                                <label for="RememberMe">Запомнить меня?</label>
+                            </div>
+
+                            <input type="submit" value="Войти" class="btn btn-primary"/>
+                            <a asp-controller="Registration" asp-action="Index" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-link">Регистрация</a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

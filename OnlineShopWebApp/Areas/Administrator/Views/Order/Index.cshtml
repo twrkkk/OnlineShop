@@ -1,0 +1,56 @@
+﻿@using OnlineShopWebApp.Helpers;
+@using OnlineShopWebApp.Models;
+@model List<OrderViewModel>
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+    <div class="col-9">
+        <h3 class="text-center"> Список заказов</h3>
+        @if (Model == null || Model.Count == 0)
+        {
+            <h3 class="text-center"> Заказы отсутствуют</h3>
+        }
+        else
+        {
+            <table id="orderList" class="table table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:10%">Номер</th>
+                        <th style="width:30%">Пользователь</th>
+                        <th style="width:15%">Сумма</th>
+                        <th style="width:15%">Дата</th>
+                        <th style="width:15%">Время</th>
+                        <th style="width:20%">Статус</th>
+                        <th style="width:25%">Оплата</th>
+                    </tr>
+                </thead>
+
+                @{
+                    int counter = 1;
+                    foreach (var orderInfo in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td data-th="Номер">@counter</td>
+                                <td data-th="Пользователь">@orderInfo.OrderForm.Name</td>
+                                <td data-th="Сумма">@orderInfo.TotalPrice</td>
+                                <td data-th="Дата">@orderInfo.OrderTime.ToShortDateString()</td>
+                                <td data-th="Время">@orderInfo.OrderTime.ToShortTimeString()</td>
+                                <td data-th="Статус">@EnumHelper.GetDisplayName(orderInfo.OrderStatus)</td>
+                                <td data-th="Статус оплаты">@EnumHelper.GetDisplayName(orderInfo.PaymentStatus)</td>
+
+                                <td class="col-md-2 text-left mt-sm-2">
+                                    <a style="color:black" asp-area="Administrator" asp-controller="Order" asp-action="ShowDetails" asp-route-orderId="@orderInfo.OrderId">
+                                        <h6>Подробнее</h6>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        counter++;
+                    }
+                }
+            </table>
+        }
+    </div>
+</div>

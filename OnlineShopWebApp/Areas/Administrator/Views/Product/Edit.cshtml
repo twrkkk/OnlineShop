@@ -1,0 +1,88 @@
+﻿@model ProductViewModel
+
+<form method="post" enctype="multipart/form-data" asp-area="Administrator" asp-controller="Product" asp-action="Save" asp-route-productId="@Model.Id">
+
+    <div class="form-group">
+        <label>Изображение</label>
+        <img src="@Model.IconSource" style="max-width: 200px;" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Название:</label>
+        <input asp-for="Name" type="text" class="form-control" placeholder="Название" value="@Model.Name">
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label for="Cost">Цена:</label>
+        <input asp-for="Cost" type="number" class="form-control" placeholder="Цена" value="@Model.Cost">
+
+        <span asp-validation-for="Cost"></span>
+    </div>
+    <div class="form-group">
+        <label for="Description">Описание:</label>
+        <input asp-for="Description" class="form-control" placeholder="Описание" value="@Model.Description">
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Загрузить новое изображение</label>
+        <input type="file" name="UploadedFile" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <h3>Текущие категории</h3>
+        @{
+            var currentCategories = (List<CategoryViewModel>)ViewData["CurrentCategories"];
+            if (currentCategories == null || currentCategories.Count == 0)
+            {
+                <h6>Категории отсутствуют</h6>
+            }
+            else
+            {
+                <div class="list-group">
+                    <div class="row">
+                        @foreach (var category in currentCategories)
+                        {
+                            <div class="col-4 mb-3">
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="text-dark">@category.Name</span>
+                                    <a class="btn btn-sm btn-outline-danger" asp-controller="Category" asp-action="DeleteProductCategory"
+                           asp-route-categoryName="@category.Name" asp-route-productId="@Model.Id" role="button">Удалить</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            }
+
+            <h3>Доступные категории</h3>
+            var categories = (List<CategoryViewModel>)ViewData["AvailableCategories"];
+            if (categories == null || categories.Count == 0)
+            {
+                <h6>Категории отсутствуют</h6>
+            }
+            else
+            {
+                <div class="list-group">
+                    <div class="row">
+                        @foreach (var category in categories)
+                        {
+                            <div class="col-4 mb-3">
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="text-dark">@category.Name</span>
+                                    <a class="btn btn-sm btn-success" asp-controller="Category" asp-action="AddProductCategory"
+                           asp-route-categoryName="@category.Name" asp-route-productId="@Model.Id" role="button">Добавить</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+
+    <input type="submit" value="Сохранить" />
+    <a class="btn btn-dark" asp-area="Administrator" asp-controller="Product" asp-action="Index" role="button">Отмена</a>
+</form>

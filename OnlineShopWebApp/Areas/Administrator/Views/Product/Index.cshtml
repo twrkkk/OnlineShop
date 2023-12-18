@@ -1,0 +1,65 @@
+﻿@model List<ProductViewModel>
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+    <div class="col-9">
+        <h3 class="text-center">Список продуктов</h3>
+
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <div class="row w-100">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <table id="productList" class="table table-condensed table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="width:50%">Товар</th>
+                                    <th style="width:12%">Цена</th>
+                                    <th style="width:16%"></th>
+                                </tr>
+                            </thead>
+
+                            @foreach (var product in Model)
+                            {
+                                @await Html.PartialAsync("ModalDeleteProduct", product)
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-3 text-left">
+                                                    <img src="@product.IconSource" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                                </div>
+                                                <div class="col-md-9 text-left mt-sm-2">
+                                                    <a style="color:black" asp-area="" asp-controller="Product" asp-action="Index" asp-route-productId="@product.Id">
+                                                        <h4>@product.Name</h4>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-th="Цена">@product.Cost</td>
+                                        <td class="col-md-2 text-left mt-sm-2">
+                                            <a style="color:black" asp-area="Administrator" asp-controller="Product" asp-action="Edit" asp-route-productId="@product.Id">
+                                                <h6>Редактировать</h6>
+                                            </a>
+                                        </td>
+                                        <td class="col-md-2 text-left mt-sm-2">
+                                            <a style="color:black" data-toggle="modal" data-target="#deleteProduct@(product.Id)">
+                                                <h6>Удалить</h6>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-4 d-flex align-items-center">
+                    <div class="col-sm-12 order-md-2 text-right">
+                        <a asp-area="Administrator" asp-controller="Product" asp-action="Create" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Создать новый товар</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>

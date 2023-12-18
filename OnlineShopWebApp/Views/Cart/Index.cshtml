@@ -1,0 +1,80 @@
+﻿@model CartViewModel
+
+@if (Model == null || Model.CartProducts == null || Model.CartProducts.Count == 0)
+{
+    <p>Это пустая корзина</p>
+}
+else
+{
+    @await Html.PartialAsync("ModalClearCart")
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="row w-100">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <h3 class="display-5 mb-2 text-center">Корзина покупок</h3>
+                    <table id="shoppingCart" class="table table-condensed table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width:60%">Товар</th>
+                                <th style="width:12%">Цена</th>
+                                <th style="width:10%">Количество</th>
+                                <th style="width:16%"></th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var cartItem in Model.CartProducts)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-3 text-left">
+                                                <img src="@cartItem.Product.IconSource" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                            </div>
+                                            <div class="col-md-9 text-left mt-sm-2">
+                                                <a style="color:black" asp-controller="Product" asp-action="Index" asp-route-productId="@cartItem.Product.Id">
+                                                    <h4>@cartItem.Product.Name</h4>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-th="Цена">@cartItem.Product.Cost</td>
+                                    <td data-th="Количество">
+                                        <a class="btn btn-sm btn-light" asp-controller="Cart" asp-action="Reduce" asp-route-productId="@cartItem.Product.Id">-</a>
+                                        <span class="quantity">@cartItem.Count</span>
+                                        <a class="btn btn-sm btn-light" asp-controller="Cart" asp-action="Add" asp-route-productId="@cartItem.Product.Id">+</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+
+                    <div class="float-right text-right">
+                        <h4>Итог:</h4>
+                        <h1>@Model.TotalPrice</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4 d-flex align-items-center">
+                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-arrow-left mr-2"></i> Продолжить покупки
+                    </a>
+                </div>
+
+                <div class="col-sm-6 order-md-2 text-right">
+                    <a asp-controller="Order" asp-action="Index" class="btn btn-dark">Оформить заказ</a>
+                </div>
+
+                <div class="col-sm-12 order-md-2 text-right">
+                    <a style="color:black" data-toggle="modal" data-target="#clearCart">
+                        <h6>Очистить корзину</h6>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+}

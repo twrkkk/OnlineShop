@@ -1,0 +1,79 @@
+﻿@model IndexViewModel<UserViewModel>
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+    <div class="col-9">
+        <h3 class="text-center">Список пользователей</h3>
+
+        @if (Model == null || Model.Entities == null || Model.Entities.Count() == 0)
+        {
+            <h3 class="text-center">Пользователи отсутсвуют</h3>
+        }
+        else
+        {
+            <section class="pt-5 pb-5">
+                <div class="container">
+                    <div class="row w-100">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <table id="productList" class="table table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="width:50%">Email</th>
+                                        <th style="width:18%">Имя</th>
+                                        <th style="width:16%">Фамилия</th>
+                                        <th style="width:16%">Телефон</th>
+                                    </tr>
+                                </thead>
+
+                                @foreach (var user in Model.Entities)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-9 text-left mt-sm-2">
+                                                        <a style="color:black" asp-area="Administrator" asp-controller="User" asp-action="Show" asp-route-userEmail="@user.RegistrationInfo.Email">
+                                                            <h4>@user.RegistrationInfo.Email</h4>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td data-th="Имя">@user.Name</td>
+                                            <td data-th="Фамилия">@user.Surname</td>
+                                            <td data-th="Телефон">@user.RegistrationInfo.Phone</td>
+
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </section>
+
+            @if (Model.PageViewModel.HasPreviousPage)
+            {
+                <a asp-area="Administrator" asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+                   class="btn btn-outline-dark">
+                    Назад
+                </a>
+            }
+            @if (Model.PageViewModel.HasNextPage)
+            {
+                <a asp-area="Administrator" asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+                   class="btn btn-outline-dark">
+                    Вперед
+                </a>
+            }
+        }
+        <div class="row mt-4 d-flex align-items-center">
+            <div class="col-sm-12 order-md-2 text-right">
+                <a asp-area="Administrator" asp-controller="User" asp-action="Add" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Добавить пользователя</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model List<CategoryViewModel>
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+
+    <div class="col-9">
+        <h3 class="text-center">Список категорий</h3>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <h3 class="text-center"> Категории отсутствуют</h3>
+        }
+        else
+        {
+            <table id="orderList" class="table table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:30%">Категория</th>
+                    </tr>
+                </thead>
+                @foreach (var category in Model)
+                {
+                    @await Html.PartialAsync("ModalDeleteCategory", category)
+                    <tbody>
+                        <tr>
+                            <td data-th="Роль">@category.Name</td>
+
+                            <td class="col-md-2 text-left mt-sm-2">
+                                <a style="color:black" data-toggle="modal" data-target="#deleteCategory@(category.Id)">
+                                    <h6>Удалить</h6>
+                                </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        }
+        <button class="col-md-2 text-left mt-sm-2">
+            <a style="color:black" asp-area="Administrator" asp-controller="Category" asp-action="Add">
+                <h6>Создать категорию</h6>
+            </a>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model Dictionary<string, List<ProductViewModel>>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model.Count == 0)
+{
+    <div class="text-center">
+        <h4>Ничего не найдено</h4>
+    </div>
+}
+
+<div class="container">
+    @foreach (var group in Model)
+    {
+        <div class="row mt-5">
+            <div class="col">
+                <h3>@group.Key</h3>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in group.Value)
+            {
+                <div class="col-3">
+                    <div class="card shadow">
+                        <img class="card-img-top" src="@item.IconSource">
+
+                        <div class="card-body">
+                            <a style="color:black" asp-controller="Product" asp-action="Index" asp-route-productId="@item.Id">
+                                <h5>@item.Name</h5>
+                            </a>
+                            <h5>@item.Cost руб</h5>
+                            <a class="btn btn-dark" asp-controller="Cart" asp-action="Add" asp-route-productId="@item.Id" role="button">Добавить в корзину</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+

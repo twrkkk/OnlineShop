@@ -1,0 +1,49 @@
+﻿@model ProductViewModel
+
+<section class="py-5">
+    <div class="container">
+        @if (Model == null)
+        {
+            <div class="text-center">
+                <h4>Ничего не найдено</h4>
+            </div>
+        }
+        else
+        {
+            <div class="row gx-5">
+                <aside class="col-lg-6">
+                    <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                        <img style="max-width: 50%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="@Model.IconSource" />
+                    </div>
+
+                </aside>
+                <main class="col-lg-6">
+                    <div class="ps-lg-3">
+                        <h4 class="title text-dark">
+                            @Model.Name
+                        </h4>
+                        <div class="d-flex flex-row my-3">
+                            <div class="text-warning mb-1 me-2">
+                                <span class="ms-1">
+                                    4.5
+                                </span>
+                            </div>
+                            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>154 orders</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="h5">@Model.Cost руб / кг</span>
+                        </div>
+
+                        <p>
+                            @Model.Description
+                        </p>
+
+                        <a class="btn btn-dark" asp-controller="Cart" asp-action="Add" asp-route-productId="@Model.Id" role="button">Добавить в корзину</a>
+                        <a class="btn btn-dark" asp-controller="Home" asp-action="Index" role="button">Продолжить покупки</a>
+                    </div>
+                </main>
+            </div>
+        }
+    </div>
+</section>

@@ -1,0 +1,15 @@
+﻿@model SelectList
+
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+    <form method="post" asp-area="Administrator" asp-controller="User" asp-action="SetUserRole" asp-route-userEmail="@ViewData["UserEmail"]">
+        <h3 class="mb-5">Изменение роли для пользователя @ViewData["UserEmail"]</h3>
+        <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+        <div>@Html.DropDownList("roleName", Model as SelectList)</div>
+
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+    </form>
+</div>

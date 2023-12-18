@@ -1,0 +1,42 @@
+﻿@model RegistrationForm
+
+<div class="row">
+    @await Html.PartialAsync("LeftAdminMenu")
+
+    <div class="col-9">
+        <h3 class="text-center">Добавление пользователя</h3>
+
+        <form method="post" asp-area="Administrator" asp-controller="User" asp-action="Add">
+
+            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-outline mb-4">
+                <input asp-for="Email" type="email" class="form-control" placeholder="Электронная почта">
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input asp-for="Phone" type="text" class="form-control" placeholder="Номер телефона">
+                <span asp-validation-for="Phone"></span>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input asp-for="Age" type="number" class="form-control" placeholder="Возраст">
+                <span asp-validation-for="Age"></span>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input asp-for="Password" class="form-control" type="password" minlength="6" maxlength="40" placeholder="Пароль" title="Пароль от 6 до 40 символов">
+                <span asp-validation-for="Password"></span>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input asp-for="ConfirmPassword" class="form-control" type="password" minlength="6" maxlength="40" placeholder="Повторите пароль" title="Пароль от 6 до 40 символов">
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+
+            <input type="submit" value="Добавить" class="btn btn-primary" />
+            <a class="btn btn-outline-primary" asp-area="Administrator" asp-controller="User" asp-action="Index">Назад</a>
+        </form>
+    </div>
+</div>
